@@ -13,8 +13,6 @@ app.use(bp.json());
 mongoose.connect(process.env.DATABASE_URL);
 
 app.get("/books", async (request, response) => {
-  console.log("Query String: ", request.query);
-
   try {
     const books = await Book.find(request.query);
     response.status(200).json(books);
@@ -41,7 +39,7 @@ app.delete("/books/:id", async (request, response) => {
     response.status(200).send(deletedBook);
   } catch (error) {
     console.log(error);
-    response.json(error);
+    response.status(500).json(error);
   }
 });
 
